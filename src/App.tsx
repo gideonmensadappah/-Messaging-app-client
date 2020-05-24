@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import { makeStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
 
-function App() {
+type Props = {};
+
+const useStyles = makeStyles({
+  header: {
+    background: "#2196f3",
+  },
+  toolBar: {
+    justifyContent: "space-between",
+  },
+  avatar: {
+    background: "#e10050",
+  },
+});
+
+const App: React.FC<Props> = () => {
+  const classes = useStyles();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppBar className={classes.header} position="static">
+        <Toolbar className={classes.toolBar}>
+          <Typography variant="h6">Messaging</Typography>
+          <Avatar className={classes.avatar}>H</Avatar>
+        </Toolbar>
+      </AppBar>
     </div>
   );
-}
+};
 
 export default App;
