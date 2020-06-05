@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { Header } from "./components/header/navbarHeader";
 import { SideBar } from "./components/sidebar/sidebarList";
+import { MessageContent } from "./components/messageContent/MessageContent";
 import {
   styled,
   createMuiTheme,
@@ -27,6 +28,7 @@ const Content = styled(Box)({
   flex: 1,
   flexDirection: "row",
   alignItems: "stretch",
+  overflow: "hidden",
 });
 
 const sideBarItem = {
@@ -43,6 +45,7 @@ const App: React.FC<Props> = () => {
             contactName={sideBarItem.contactName}
             lastMessage={sideBarItem.lastMessage}
           />
+          <MessageContent />
         </Content>
       </AppContainer>
     </ThemeProvider>
