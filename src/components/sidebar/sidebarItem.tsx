@@ -22,9 +22,11 @@ export const SideBarItem: React.FC<Props> = ({ contactName, lastMessage }) => {
         <Avatar className={classes.avatar}>H</Avatar>
         <div className="metadata">
           <div className="user-name">{contactName}</div>
-          <div className="time">3 minuts ago...</div>
+          <div className="time">3 minutes ago...</div>
         </div>
-        <div className="menu">menu</div>
+        <div className="menu">
+          <i className="fas fa-ellipsis-v"></i>
+        </div>
       </div>
       <div className="message-preview">{lastMessage}</div>
     </div>
