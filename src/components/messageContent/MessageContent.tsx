@@ -1,12 +1,18 @@
 import React from "react";
 import "./messageContent.css";
-type Props = {};
+import { ReadMessagesContainer } from "../ReadMessagesContainer/ReadMessagesContainer";
 
-export const MessageContent: React.FC<Props> = (Props) => {
+type Props = {
+  message: string;
+};
+
+export const MessageContent: React.FC<Props> = ({ message }) => {
   return (
     <>
       <div className="container-box">
-        <div className="messages">message message</div>
+        <div className="messages">
+          <ReadMessagesContainer />
+        </div>
         <div className="rectangle-container">
           <input type="text" className="rectangle-input" />
         </div>
