@@ -35,6 +35,10 @@ const sideBarItem = {
   contactName: "gideon",
   lastMessage: "hello user",
 };
+
+const metaDataMessage = {
+  message: sideBarItem.lastMessage,
+};
 const App: React.FC<Props> = () => {
   return (
     <ThemeProvider theme={theme}>
@@ -45,7 +49,7 @@ const App: React.FC<Props> = () => {
             contactName={sideBarItem.contactName}
             lastMessage={sideBarItem.lastMessage}
           />
-          <MessageContent />
+          <MessageContent message={metaDataMessage.message} />
         </Content>
       </AppContainer>
     </ThemeProvider>
