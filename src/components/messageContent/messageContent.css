@@ -1,3 +1,6 @@
+.messages {
+  overflow-y: auto;
+}
 .container-box {
   display: flex;
   flex-direction: column;
@@ -11,7 +14,7 @@
   padding: 20px;
   height: 96px;
   margin-top: auto;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
 }
 .rectangle-input {
   height: 56px;
