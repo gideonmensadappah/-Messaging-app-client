@@ -1,59 +1,34 @@
-import React from "react";
+import React, { Component, Props } from "react";
 import "./App.css";
-import { Header } from "./components/header/navbarHeader";
-import { SideBar } from "./components/sidebar/sidebarList";
-import { MessageContent } from "./components/messageContent/MessageContent";
-import {
-  styled,
-  createMuiTheme,
-  ThemeProvider,
-} from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-
-type Props = {};
-
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: "'Roboto', sans-serif",
-  },
-});
-const AppContainer = styled(Box)({
-  display: "flex",
-  height: "100vh",
-  flexDirection: "column",
-  justifyContent: "flex-start",
-});
-const Content = styled(Box)({
-  display: "flex",
-  flex: 1,
-  flexDirection: "row",
-  alignItems: "stretch",
-  overflow: "hidden",
-});
-
-const sideBarItem = {
-  contactName: "gideon",
-  lastMessage: "hello user",
+import MessagingHome from "./components/messagingHome/home";
+import { LogIn } from "./components/loginSystem/login";
+import fire from "./config/fire";
+type User = {
+  email: "";
+  password: "";
 };
 
-const metaDataMessage = {
-  message: sideBarItem.lastMessage,
-};
-const App: React.FC<Props> = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <AppContainer>
-        <Header />
-        <Content>
-          <SideBar
-            contactName={sideBarItem.contactName}
-            lastMessage={sideBarItem.lastMessage}
-          />
-          <MessageContent message={metaDataMessage.message} />
-        </Content>
-      </AppContainer>
-    </ThemeProvider>
-  );
-};
+export default class App extends Component {
+  constructor(props: User) {
+    super(props);
+    this.state = {
+      user: {},
+    };
+  }
+  componentDidMount() {
+    this.authListener();
+  }
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({ user });
+      } else {
+        this.setState({ user: null });
+      }
+    });
+  }
 
-export default App;
+  render() {
+    return <>{this.state.user ? <MessagingHome /> : <LogIn />} </>;
+  }
+}
