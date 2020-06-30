@@ -1,0 +1,34 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.form-input {
+  display: flex;
+  margin-left: auto;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.form-control {
+  display: flex;
+  margin: 30px;
+}
+
+.form-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-button:hover {
+  background-color: rgba(105, 79, 179, 0.164);
+}
+
+button {
+  border-radius: 2px;
+  border: 25px;
+}
