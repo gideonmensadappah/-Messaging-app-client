@@ -1,34 +1,64 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./sideBar.css";
 import { SideBarItem } from "./sidebarItem";
-import { getCurrentUserMessagesAsync } from "../../functionsHelpers/myFunctions";
+import cc from "classnames";
+import {
+  getCurrentUserMessagesAsync,
+  createNewChatAsync,
+  ChatPayload,
+  Chat,
+} from "../../functionsHelpers/myFunctions";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+
 type Props = {
   contactName: string;
   lastMessage: string;
+  currentUserId: string;
 };
 
-type chatsState = {
-  _id: string;
-  usersId: Array<string>;
-  length: number;
-};
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+      color: "#2196f3",
+    },
+  },
+}));
 
-export const SideBar: React.FC<Props> = ({ lastMessage, contactName }) => {
-  const [chatsList, setChatsList] = useState<chatsState>();
-  const [length, setLength] = useState<number | any>();
+export const SideBar: React.FC<Props> = ({
+  currentUserId,
+  lastMessage,
+  contactName,
+}) => {
+  const classes = useStyles();
+  const [chatsList, setChatsList] = useState<Array<Chat> | null>(null);
+
   useEffect(() => {
-    getCurrentUserMessagesAsync("24").then((chats: chatsState) => {
-      setLength(chats.length);
+    getCurrentUserMessagesAsync(currentUserId).then((chats) => {
       setChatsList(chats);
     });
-  }, []);
+  }, [chatsList, currentUserId]);
+
+  const createNewChat = useCallback(() => {
+    const payload: ChatPayload = {
+      currentUserId: currentUserId,
+      requestedUserId: "2",
+    };
+    createNewChatAsync(payload).then((chatId) => console.log(chatId));
+  }, [currentUserId]);
+
   return (
-    <div className="container">
+    <div className="container-list">
       {chatsList?.length
-        ? Array.from({ length: length }, () => (
+        ? Array.from({ length: chatsList.length }, () => (
             <SideBarItem contactName={contactName} lastMessage={lastMessage} />
           ))
         : "No Chats!"}
+
+      <div className={cc("create-chat-btn", classes.root)}>
+        <Button onClick={createNewChat}>Create Chat</Button>
+      </div>
     </div>
   );
 };
