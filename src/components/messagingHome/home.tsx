@@ -8,6 +8,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
+import * as firebase from "firebase";
 
 const theme = createMuiTheme({
   typography: {
@@ -36,15 +37,32 @@ const sideBarItem = {
 const metaDataMessage = {
   message: sideBarItem.lastMessage,
 };
+type State = {
+  uid: string;
+};
+export default class MessagingHome extends Component<{}, State> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      uid: "",
+    };
+  }
+  componentDidMount() {
+    const uid = String(firebase.auth().currentUser?.uid);
+    this.setState({
+      uid: uid,
+    });
+  }
 
-export default class MessagingHome extends Component {
   render() {
+    const { uid } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <AppContainer>
           <Header />
           <Content>
             <SideBar
+              currentUserId={uid}
               contactName={sideBarItem.contactName}
               lastMessage={sideBarItem.lastMessage}
             />
