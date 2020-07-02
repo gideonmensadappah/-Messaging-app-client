@@ -33,11 +33,11 @@ class Register extends Component<{}, State> {
   };
 
   handleClick = () => {
-    console.log(this.state);
-    // fire
-    //   .auth()
-    //   .createUserWithEmailAndPassword(
-    //   );
+    const { email, password } = this.state;
+    fire
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .catch((err) => alert(err.message));
   };
 
   render() {
