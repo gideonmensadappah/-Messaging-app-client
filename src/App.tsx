@@ -1,34 +1,31 @@
-import React, { Component, Props } from "react";
+import React, { Component } from "react";
 import "./App.css";
 import MessagingHome from "./components/messagingHome/home";
-import { LogIn } from "./components/loginSystem/login";
+import LogInOrRegister from "./components/loginRegister/loginRegister";
 import fire from "./config/fire";
-type User = {
-  email: "";
-  password: "";
+
+type State = {
+  user: firebase.User | null;
 };
 
-export default class App extends Component {
-  constructor(props: User) {
+export default class App extends Component<{}, State> {
+  constructor(props: State) {
     super(props);
     this.state = {
-      user: {},
+      user: null,
     };
   }
   componentDidMount() {
     this.authListener();
   }
+
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ user });
-      } else {
-        this.setState({ user: null });
-      }
+      this.setState({ user });
     });
   }
 
   render() {
-    return <>{this.state.user ? <MessagingHome /> : <LogIn />} </>;
+    return <>{this.state.user ? <MessagingHome /> : <LogInOrRegister />}</>;
   }
 }
