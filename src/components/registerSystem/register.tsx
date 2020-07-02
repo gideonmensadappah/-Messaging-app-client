@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./register.css";
 import fire from "../../config/fire";
 import { Link } from "react-router-dom";
-
+import { registerUser, User } from "../../functionsHelpers/myFunctions";
 type State = {
   firstName: string;
   lastName: string;
@@ -33,10 +33,19 @@ class Register extends Component<{}, State> {
   };
 
   handleClick = () => {
-    const { email, password } = this.state;
+    const { email, password, firstName, lastName, phone } = this.state;
     fire
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        const payload: User = {
+          uid: user?.user?.uid,
+          firstName,
+          lastName,
+          phone: Number(phone),
+        };
+        registerUser(payload).then((newUser) => console.log(newUser));
+      })
       .catch((err) => alert(err.message));
   };
 
