@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import "./App.css";
-import MessagingHome from "./components/messagingHome/home";
-import LogInOrRegister from "./components/loginRegister/loginRegister";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import fire from "./config/fire";
+import Home from "./pages/home";
+import LogIn from "./pages/login";
+import Register from "./pages/register";
+import "./App.css";
 
 type State = {
   user: firebase.User | null;
@@ -26,6 +28,15 @@ export default class App extends Component<{}, State> {
   }
 
   render() {
-    return <>{this.state.user ? <MessagingHome /> : <LogInOrRegister />}</>;
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact>
+            {this.state.user ? <Home /> : <LogIn />}
+          </Route>
+          <Route path="/register" exact component={Register} />
+        </Switch>
+      </Router>
+    );
   }
 }
