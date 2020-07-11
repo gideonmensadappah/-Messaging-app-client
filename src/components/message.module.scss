@@ -1,0 +1,35 @@
+@import "../colors";
+.messageContainer {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  max-width: 386px;
+
+  .message {
+    display: flex;
+    word-break: break-all;
+    padding: 14px 24px 14px 16px;
+    line-height: 1.71;
+    border-radius: 10px;
+  }
+  &.ownMessage {
+    align-self: flex-end;
+    justify-content: flex-end;
+
+    .message {
+      color: white;
+      background-color: $blue;
+    }
+  }
+
+  &.userMessage {
+    .message {
+      color: black;
+      background-color: white;
+    }
+  }
+}
+.avatar {
+  margin-right: 20px;
+}
