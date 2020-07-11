@@ -1,4 +1,9 @@
-const REQUEST_URL = "http://localhost:5151/messages/";
+const REQUEST_URL = "http://localhost:5000/messages/";
+
+export const getChat = async (chatId: string) => {
+  let res = await fetch(`http://localhost:5000/chats/chat/${chatId}`);
+  return res.json();
+};
 
 export type Chat = {
   _id: string;
@@ -34,7 +39,7 @@ export type User = {
   phone: number;
 };
 export const registerUser = async (payload: User) => {
-  const res = await fetch(`http://localhost:5151/users/new-user`, {
+  const res = await fetch(`http://localhost:5000/users/new-user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
