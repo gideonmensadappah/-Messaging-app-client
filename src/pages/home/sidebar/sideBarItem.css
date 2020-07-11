@@ -1,0 +1,29 @@
+.fa-ellipsis-v {
+  cursor: pointer;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-bottom: solid 1px #c4c4c4;
+  padding: 16px;
+}
+.message > div {
+  display: flex;
+  flex-direction: row;
+}
+.menu {
+  flex: 0;
+}
+
+.metadata {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding-left: 16px;
+}
+.message-preview {
+  padding-top: 12px;
+  padding-left: 4px;
+}
