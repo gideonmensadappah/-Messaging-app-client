@@ -1,19 +1,14 @@
 const { REACT_APP_BACKEND_URL } = process.env;
 
 export const deleteChat = async (chatId: string) => {
-  const res = await fetch(
-    `${REACT_APP_BACKEND_URL}/messages/delete-chat/${chatId}`
-  );
+  const res = await fetch(`${REACT_APP_BACKEND_URL}/chat/${chatId}`, {
+    method: "DELETE",
+  });
   return res.json();
 };
 
 export const getUsersList = async (userInput: string) => {
   let res = await fetch(`${REACT_APP_BACKEND_URL}/search?query=${userInput}`);
-  return res.json();
-};
-
-export const getChat = async (chatId: string) => {
-  let res = await fetch(`${REACT_APP_BACKEND_URL}/chats/chat/${chatId}`);
   return res.json();
 };
 
@@ -23,7 +18,9 @@ export type Chat = {
   length: number;
 };
 export const getCurrentUserChats = async (currentUserId: string) => {
-  const res = await fetch(`${REACT_APP_BACKEND_URL}/user/${currentUserId}`);
+  const res = await fetch(
+    `${REACT_APP_BACKEND_URL}/chat/user/${currentUserId}`
+  );
   const chats: Array<Chat> = await res.json();
   return chats;
 };
@@ -34,7 +31,7 @@ export type ChatPayload = {
   requestedUserId: string;
 };
 export const createNewChatAsync = async (payload: ChatPayload) => {
-  const res = await fetch(`${REACT_APP_BACKEND_URL}/create-new-chat`, {
+  const res = await fetch(`${REACT_APP_BACKEND_URL}/chat`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
