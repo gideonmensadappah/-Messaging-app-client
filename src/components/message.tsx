@@ -2,6 +2,7 @@ import React from "react";
 import cn from "classnames";
 import styles from "./message.module.scss";
 import Avatar from "@material-ui/core/Avatar";
+
 type Props = {
   message: Message;
   currentUserId: string;
@@ -14,6 +15,7 @@ export type Message = {
   text: string | null;
   createdAt: Date;
 };
+
 export const MessageView: React.FC<Props> = ({
   message: { id, userId, chatId, avatar, text, createdAt },
   currentUserId,
