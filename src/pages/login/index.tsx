@@ -55,7 +55,7 @@ const LogIn: React.FC = (props) => {
           <button type="submit" onClick={handleSignIn} className="form-button">
             LogIn
           </button>
-          <Link to="/register-new-user">
+          <Link to="/register">
             <button type="submit" className="form-button">
               Register
             </button>
