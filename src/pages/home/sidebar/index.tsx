@@ -2,13 +2,12 @@ import React, { useEffect, useState, useCallback } from "react";
 import cc from "classnames";
 import {
   getCurrentUserMessagesAsync,
-  createNewChatAsync,
-  ChatPayload,
   Chat,
 } from "../../../functionsHelpers/myFunctions";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { SideBarItem } from "./sidebarItem";
+import NewChat from "../../../components/newChat";
 import "./sideBar.css";
 
 type Props = {
@@ -36,49 +35,57 @@ export const SideBar: React.FC<Props> = ({
   const classes = useStyles();
   const [chatsList, setChatsList] = useState<Array<Chat> | null>(null);
   const [chatId, setChatId] = useState<string | null>(null);
-  let getMessagesList = useCallback((currentUserId: string) => {
+  const [showList, setShowList] = useState(true);
+  const [text, setText] = useState("CREATE CHAT");
+
+  const getMessagesList = useCallback((currentUserId: string) => {
     getCurrentUserMessagesAsync(currentUserId).then((chats: Array<Chat>) => {
       setChatsList(chats);
     });
   }, []);
 
-  const getChatId = (chatId: string) => {
+  const getChatId = useCallback((chatId: string) => {
+    console.log(chatId);
     setChatId(chatId);
-  };
+  }, []);
+
+  const createNewChatButton = useCallback(() => {
+    if (showList) {
+      setShowList(false);
+      setText("CHAT LIST");
+    } else {
+      setShowList(true);
+      setText("CREATE CHAT");
+    }
+  }, [showList]);
+  const returnChatList = useCallback(() => {
+    setShowList(true);
+  }, []);
   useEffect(() => {
     if (chatId) setUserChatId(chatId);
-  }, [chatId, setUserChatId]);
+    getMessagesList(currentUserId);
+  }, [chatId, setUserChatId, getMessagesList, currentUserId]);
 
-  useEffect(() => getMessagesList(currentUserId), [
-    getMessagesList,
-    currentUserId,
-  ]);
-
-  const createNewChat = useCallback(() => {
-    const payload: ChatPayload = {
-      currentUserId,
-      requestedUserId: "2",
-    };
-    createNewChatAsync(payload).then((chatId) => console.log(chatId));
-  }, [currentUserId]);
-
+  const isAvailable = chatsList?.length && showList;
   return (
     <div className="container-list">
       <div className={cc("create-chat-btn", classes.root)}>
-        <Button onClick={createNewChat}>Create Chat</Button>
+        <Button onClick={createNewChatButton}>{text}</Button>
       </div>
-      {chatsList?.length
-        ? chatsList?.map((chat) => (
-            <SideBarItem
-              chat={chat}
-              getChatId={getChatId}
-              key={chat._id}
-              chatId={chat._id}
-              contactName={contactName}
-              lastMessage={lastMessage}
-            />
-          ))
-        : "No Chats!"}
+      {isAvailable ? (
+        chatsList?.map((chat) => (
+          <SideBarItem
+            chat={chat}
+            getChatId={getChatId}
+            key={chat._id}
+            chatId={chat._id}
+            contactName={contactName}
+            lastMessage={lastMessage}
+          />
+        ))
+      ) : (
+        <NewChat setShowList={returnChatList} currentUserId={currentUserId} />
+      )}
     </div>
   );
 };
