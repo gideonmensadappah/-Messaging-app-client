@@ -2,11 +2,7 @@ import React, { useCallback } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/styles";
-import {
-  Chat,
-  getChat,
-  deleteChat,
-} from "../../../functionsHelpers/myFunctions";
+import { deleteChat } from "../../../functionsHelpers/myFunctions";
 import "./sideBarItem.css";
 
 type Props = {
