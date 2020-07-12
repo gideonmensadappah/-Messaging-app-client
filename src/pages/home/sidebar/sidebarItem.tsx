@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import Avatar from "@material-ui/core/Avatar";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/styles";
 import { Chat, getChat } from "../../../functionsHelpers/myFunctions";
 import "./sideBarItem.css";
@@ -46,7 +47,7 @@ export const SideBarItem: React.FC<Props> = ({
           <div className="time">3 minutes ago...</div>
         </div>
         <div className="menu">
-          <i className="fas fa-ellipsis-v"></i>
+          <DeleteIcon />
         </div>
       </div>
       <div className="message-preview">{lastMessage}</div>
