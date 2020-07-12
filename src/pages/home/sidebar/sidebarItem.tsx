@@ -2,15 +2,18 @@ import React, { useCallback } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/styles";
-import { Chat, getChat } from "../../../functionsHelpers/myFunctions";
+import {
+  Chat,
+  getChat,
+  deleteChat,
+} from "../../../functionsHelpers/myFunctions";
 import "./sideBarItem.css";
 
 type Props = {
   contactName: string;
   lastMessage: string;
-  chat: Chat;
   chatId: string;
-  getChatId: (chatId: string) => void;
+  setChatId: (chatId: string) => void;
 };
 
 const useStyle = makeStyles({
@@ -22,24 +25,25 @@ const useStyle = makeStyles({
 export const SideBarItem: React.FC<Props> = ({
   contactName,
   lastMessage,
-  chat: { _id, usersId },
   chatId,
-  getChatId,
+  setChatId,
 }) => {
   const classes = useStyle();
 
-  const handleChatItem = useCallback(
-    (event, chatId) => {
-      event.preventDefault();
-      getChat(chatId).then((chat) => {
-        getChatId(chat._id);
-      });
+  const handleClick = useCallback(
+    (_) => {
+      setChatId(chatId);
     },
-    [getChatId]
+    [setChatId, chatId]
   );
-
+  const handleDelete = useCallback(
+    (_) => {
+      deleteChat(chatId).then((res) => console.log(res));
+    },
+    [chatId]
+  );
   return (
-    <div className="message" onClick={(event) => handleChatItem(event, chatId)}>
+    <div className="message" onClick={handleClick}>
       <div className="details">
         <Avatar className={classes.avatar}>H</Avatar>
         <div className="metadata">
@@ -47,7 +51,7 @@ export const SideBarItem: React.FC<Props> = ({
           <div className="time">3 minutes ago...</div>
         </div>
         <div className="menu">
-          <DeleteIcon />
+          <DeleteIcon onClick={handleDelete} />
         </div>
       </div>
       <div className="message-preview">{lastMessage}</div>

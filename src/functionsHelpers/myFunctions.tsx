@@ -1,5 +1,12 @@
 const REQUEST_URL = "http://localhost:5000/messages/";
 
+export const deleteChat = async (chatId: string) => {
+  const res = await fetch(
+    `http://localhost:5000/messages/delete-chat/${chatId}`
+  );
+  return res.json();
+};
+
 export const getUsersList = async (userInput: string) => {
   let res = await fetch(`http://localhost:5000/search?query=${userInput}`);
   return res.json();
@@ -15,8 +22,8 @@ export type Chat = {
   usersId: Array<string>;
   length: number;
 };
-export const getCurrentUserMessagesAsync = async (currentUserId: string) => {
-  let res = await fetch(`${REQUEST_URL}user/${currentUserId}`);
+export const getCurrentUserChats = async (currentUserId: string) => {
+  const res = await fetch(`${REQUEST_URL}user/${currentUserId}`);
   const chats: Array<Chat> = await res.json();
   return chats;
 };

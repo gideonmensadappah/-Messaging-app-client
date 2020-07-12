@@ -48,19 +48,19 @@ const sideBarItem = {
 
 type State = {
   uid: string;
-  chatId: string | null;
+  currentChatId: string | null;
 };
 export default class MessagingHome extends Component<{}, State> {
   constructor(props: any) {
     super(props);
     this.state = {
       uid: "",
-      chatId: null,
+      currentChatId: null,
     };
   }
-  setUserChatId = (chatId: string) => {
+  setCurrentChatId = (currentChatId: string) => {
     this.setState({
-      chatId,
+      currentChatId,
     });
   };
   componentDidMount() {
@@ -70,14 +70,14 @@ export default class MessagingHome extends Component<{}, State> {
     });
   }
   // componentDidUpdate(prevState: State) {
-  //   const { chatId } = this.state;
-  //   if (chatId !== prevState.chatId) {
-  //     if (chatId) this.setUserChatId(chatId);
+  //   const { currentChatId } = this.state;
+  //   if (currentChatId !== prevState.currentChatId) {
+  //     if (currentChatId) this.setUsercurrentChatId(currentChatId);
   //   }
   // }
 
   render() {
-    const { uid, chatId } = this.state;
+    const { uid, currentChatId } = this.state;
 
     return (
       <ThemeProvider theme={theme}>
@@ -85,14 +85,15 @@ export default class MessagingHome extends Component<{}, State> {
           <Header />
           <ContentContainer>
             <SideBar
-              setUserChatId={this.setUserChatId}
+              currentChatId={currentChatId}
+              setCurrentChatId={this.setCurrentChatId}
               currentUserId={uid}
               contactName={sideBarItem.contactName}
               lastMessage={sideBarItem.lastMessage}
             />
             <Content>
-              <MessageList chatId={chatId} userId={uid} />
-              <MessageInput chatId={chatId} userId={uid} />
+              <MessageList chatId={currentChatId} userId={uid} />
+              <MessageInput chatId={currentChatId} userId={uid} />
             </Content>
           </ContentContainer>
         </AppContainer>
