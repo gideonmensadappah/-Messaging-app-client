@@ -57,8 +57,8 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
         placeholder="Write something already :)"
         className={styles.messageInput}
       />
-      <Fab color="primary" className={styles.sendButton}>
-        <Send onClick={handleSubmit} />
+      <Fab onClick={handleSubmit} color="primary" className={styles.sendButton}>
+        <Send />
       </Fab>
     </div>
   );
