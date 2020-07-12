@@ -15,6 +15,7 @@
 }
 .menu {
   flex: 0;
+  cursor: pointer;
 }
 
 .metadata {
