@@ -8,7 +8,7 @@ type Props = {
   userId: string;
   chatId: string | null;
 };
-const socket = io("http://localhost:5000");
+const socket = io(process.env.BACKEND_URL!);
 
 const initialState: Array<Message> = [];
 
