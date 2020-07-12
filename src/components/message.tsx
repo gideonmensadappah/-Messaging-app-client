@@ -10,8 +10,8 @@ type Props = {
 export type Message = {
   id: string;
   avatar: string;
-  userId: string | null;
-  chatId: string | null;
+  userId: string;
+  chatId: string;
   text: string | null;
   createdAt: Date;
 };
