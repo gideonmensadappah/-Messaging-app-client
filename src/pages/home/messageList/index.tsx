@@ -8,7 +8,7 @@ type Props = {
   userId: string;
   chatId: string | null;
 };
-const socket = io(process.env.BACKEND_URL!);
+const socket = io(process.env.REACT_APP_BACKEND_URL!);
 
 const initialState: Array<Message> = [];
 

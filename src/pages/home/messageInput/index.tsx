@@ -11,7 +11,7 @@ type Props = {
   chatId: string | null;
 };
 
-const socket = io(process.env.BACKEND_URL!);
+const socket = io(process.env.REACT_APP_BACKEND_URL!);
 export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
   const [state, setState] = useState("");
   const [message, setMessage] = useState({
