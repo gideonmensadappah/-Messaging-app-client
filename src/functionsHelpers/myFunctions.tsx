@@ -1,5 +1,10 @@
 const REQUEST_URL = "http://localhost:5000/messages/";
 
+export const getUsersList = async (userInput: string) => {
+  let res = await fetch(`http://localhost:5000/search?query=${userInput}`);
+  return res.json();
+};
+
 export const getChat = async (chatId: string) => {
   let res = await fetch(`http://localhost:5000/chats/chat/${chatId}`);
   return res.json();
