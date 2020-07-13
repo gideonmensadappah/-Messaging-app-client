@@ -41,11 +41,14 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
   const handleSubmit = useCallback(
     (event) => {
       event.preventDefault();
-      console.log(chatId);
-      socket.emit("new message", JSON.stringify(message));
-      setState("");
+
+      if (message.text) {
+        socket.emit("new message", JSON.stringify(message));
+        setMessage(Object.assign({}, message, { text: null }));
+        setState("");
+      }
     },
-    [message, chatId]
+    [message]
   );
 
   return (
