@@ -10,6 +10,7 @@ type Props = {
   lastMessage: string;
   chatId: string;
   setChatId: (chatId: string) => void;
+  chatList: Array<any>;
 };
 
 const useStyle = makeStyles({
@@ -23,6 +24,7 @@ export const SideBarItem: React.FC<Props> = ({
   lastMessage,
   chatId,
   setChatId,
+  chatList,
 }) => {
   const classes = useStyle();
 
@@ -33,10 +35,12 @@ export const SideBarItem: React.FC<Props> = ({
     [setChatId, chatId]
   );
   const handleDelete = useCallback(
-    (_) => {
-      deleteChat(chatId).then((res) => console.log(res));
+    async (_) => {
+      const id = chatList.findIndex((chats) => chats._id === chatId);
+      chatList.splice(id, 1);
+      await deleteChat(chatId);
     },
-    [chatId]
+    [chatId, chatList]
   );
   return (
     <div className="message" onClick={handleClick}>
