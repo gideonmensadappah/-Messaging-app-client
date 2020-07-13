@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./register.css";
 import fire from "../../config/fire";
-import { Link } from "react-router-dom";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import { registerUser, User } from "../../functionsHelpers/myFunctions";
 type State = {
   firstName: string;
@@ -11,7 +11,7 @@ type State = {
   password: string;
 };
 
-class Register extends Component<{}, State> {
+class Register extends Component<RouteComponentProps, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -44,7 +44,10 @@ class Register extends Component<{}, State> {
           lastName,
           phone: Number(phone),
         };
-        registerUser(payload).then((newUser) => console.log(newUser));
+        registerUser(payload).then((newUser) => {
+          console.log(newUser);
+          this.props.history.push("/");
+        });
       })
       .catch((err) => alert(err.message));
   };
@@ -126,4 +129,4 @@ class Register extends Component<{}, State> {
   }
 }
 
-export default Register;
+export default withRouter(Register);
