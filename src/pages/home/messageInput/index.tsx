@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Fab from "@material-ui/core/Fab";
 import Send from "@material-ui/icons/Send";
 import io from "socket.io-client";
@@ -14,10 +14,10 @@ type Props = {
 const socket = io(process.env.REACT_APP_BACKEND_URL!);
 export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
   const [state, setState] = useState("");
+  const [typing, setTyping] = useState<string | null>(null);
   const [message, setMessage] = useState({
     id: null,
-    avatar:
-      "https://images2.minutemediacdn.com/image/upload/c_fill,w_912,h_516,f_auto,q_auto,g_auto/shape/cover/sport/fbl-ita-seriea-juventus-cagliari-5e141281f00e4a18a8000001.jpg",
+    avatar: null,
     userId: null,
     chatId: null,
     text: null,
@@ -34,6 +34,9 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
       });
       setMessage(newMessage);
       setState(event.target.value);
+
+      socket.emit("typing", "typing...");
+      if (!event.target.value) socket.emit("stop typing", "typing stopped");
     },
     [message, chatId, userId]
   );
@@ -51,8 +54,14 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
     [message]
   );
 
+  useEffect(() => {
+    socket.on("user typing", (msg: string) => setTyping(msg));
+    socket.on("user typing stopped", (msg: string) => setTyping(null));
+  });
+
   return (
     <div className={styles.inputContainer}>
+      <span>{typing ? `user is ${typing}` : null}</span>
       <input
         type="text"
         value={state}
