@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./register.css";
 import fire from "../../config/fire";
-import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { registerUser, User } from "../../functionsHelpers/myFunctions";
 type State = {
   firstName: string;
@@ -51,6 +51,8 @@ class Register extends Component<RouteComponentProps, State> {
       })
       .catch((err) => alert(err.message));
   };
+
+  handleSignInClick = () => this.props.history.push("/");
 
   render() {
     const { firstName, lastName, email, phone, password } = this.state;
@@ -116,12 +118,14 @@ class Register extends Component<RouteComponentProps, State> {
             <button type="submit" onClick={this.handleClick} className="link">
               Create accout
             </button>
-            <span className="signIn">already have account?</span>
-            <Link to="/">
-              <button className="link" type="submit">
-                sign
-              </button>
-            </Link>
+            <span className="signIn">Already have account?</span>
+            <button
+              className="link"
+              onClick={this.handleSignInClick}
+              type="submit"
+            >
+              Sign
+            </button>
           </div>
         </div>
       </div>
