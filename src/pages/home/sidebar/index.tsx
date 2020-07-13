@@ -36,7 +36,6 @@ export const SideBar: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
   const [chatList, setChatList] = useState<Array<Chat> | null>(null);
-
   const [shouldShowList, setShowList] = useState(true);
 
   const toggleList = useCallback(() => {
@@ -48,8 +47,10 @@ export const SideBar: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    getCurrentUserChats(currentUserId).then((chats) => setChatList(chats));
-  }, [currentUserId]);
+    if (currentUserId && shouldShowList) {
+      getCurrentUserChats(currentUserId).then((chats) => setChatList(chats));
+    }
+  }, [currentUserId, shouldShowList]);
 
   return (
     <div className="container-list">
@@ -64,6 +65,7 @@ export const SideBar: React.FC<Props> = ({
             setChatId={setCurrentChatId}
             key={chat._id}
             chatId={chat._id}
+            chatList={chatList}
             contactName={contactName}
             lastMessage={lastMessage}
           />
