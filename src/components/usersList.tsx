@@ -2,10 +2,7 @@ import React, { useCallback } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/styles";
 import { User } from "./newChat";
-import {
-  createNewChatAsync,
-  ChatPayload,
-} from "../functionsHelpers/myFunctions";
+import { createNewChat, ChatPayload } from "../functionsHelpers/myFunctions";
 type Props = {
   suggestion: User;
   currentUserId: string;
@@ -32,7 +29,7 @@ export const UsersList: React.FC<Props> = ({
           requestedUserId: _id,
         };
         alert(`new chat with ${firstName}`);
-        createNewChatAsync(payload);
+        createNewChat(payload);
         setShowList();
       }
     },
