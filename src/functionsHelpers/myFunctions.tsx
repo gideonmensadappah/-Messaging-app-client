@@ -8,7 +8,7 @@ export const deleteChat = async (chatId: string) => {
 };
 
 export const getUsersList = async (userInput: string) => {
-  let res = await fetch(`${REACT_APP_BACKEND_URL}/search?query=${userInput}`);
+  const res = await fetch(`${REACT_APP_BACKEND_URL}/search?query=${userInput}`);
   return res.json();
 };
 
@@ -17,20 +17,18 @@ export type Chat = {
   usersId: Array<string>;
   length: number;
 };
+
 export const getCurrentUserChats = async (currentUserId: string) => {
-  const res = await fetch(
-    `${REACT_APP_BACKEND_URL}/chat/user/${currentUserId}`
-  );
+  const res = await fetch(`${REACT_APP_BACKEND_URL}/chats/${currentUserId}`);
   const chats: Array<Chat> = await res.json();
   return chats;
 };
 
-//
 export type ChatPayload = {
   currentUserId: string;
   requestedUserId: string;
 };
-export const createNewChatAsync = async (payload: ChatPayload) => {
+export const createNewChat = async (payload: ChatPayload) => {
   const res = await fetch(`${REACT_APP_BACKEND_URL}/chat`, {
     method: "POST",
     headers: {
