@@ -69,12 +69,6 @@ export default class MessagingHome extends Component<{}, State> {
       uid,
     });
   }
-  // componentDidUpdate(prevState: State) {
-  //   const { currentChatId } = this.state;
-  //   if (currentChatId !== prevState.currentChatId) {
-  //     if (currentChatId) this.setUsercurrentChatId(currentChatId);
-  //   }
-  // }
 
   render() {
     const { uid, currentChatId } = this.state;
