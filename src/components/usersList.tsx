@@ -3,6 +3,8 @@ import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/styles";
 import { User } from "./newChat";
 import { createNewChat, ChatPayload } from "../functionsHelpers/myFunctions";
+import style from "./usesList.module.scss";
+
 type Props = {
   suggestion: User;
   currentUserId: string;
@@ -41,9 +43,9 @@ export const UsersList: React.FC<Props> = ({
       className="message"
       onClick={(event) => onUserClicked(event, _id, firstName)}
     >
-      <div className="details">
+      <div className={style.details}>
         <Avatar className={classes.avatar}>H</Avatar>
-        <div className="metadata">
+        <div className="user-details">
           <div className="user-name">{firstName}</div>
           <div className="message-preview">{lastName + " " + phone}</div>
         </div>

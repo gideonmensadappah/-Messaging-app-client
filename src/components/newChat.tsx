@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import { getUsersList } from "../functionsHelpers/myFunctions";
+import { getAutoCompleteUsersList } from "../functionsHelpers/myFunctions";
 import { UsersList } from "./usersList";
 type Props = {
   currentUserId: string;
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
       width: "25ch",
+      padding: "10px",
     },
   },
 }));
@@ -33,7 +34,7 @@ const NewChat: React.FC<Props> = ({ setShowList, currentUserId }) => {
 
   useEffect(() => {
     if (userInput) {
-      getUsersList(userInput).then((users) => {
+      getAutoCompleteUsersList(userInput).then((users) => {
         setSuggestion(users);
       });
     } else {
@@ -46,9 +47,9 @@ const NewChat: React.FC<Props> = ({ setShowList, currentUserId }) => {
       <div>
         <TextField
           onKeyUp={handleOnKeyUp}
-          type="search"
           id="standard-search"
-          label="Search by name"
+          label="Search..."
+          variant="filled"
         ></TextField>
       </div>
       {suggestions
