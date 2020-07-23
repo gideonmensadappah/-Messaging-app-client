@@ -20,7 +20,6 @@ const theme = createMuiTheme({
 });
 const AppContainer = styled(Box)({
   display: "flex",
-  height: "100vh",
   flexDirection: "column",
   justifyContent: "flex-start",
 });
@@ -34,17 +33,13 @@ const ContentContainer = styled(Box)({
 
 const Content = styled(Box)({
   display: "flex",
-  overflowY: "auto",
+  overflowY: "hidden",
+  position: "relative",
   flexDirection: "column",
   backgroundColor: "rgba(244, 244, 244, 0.9)",
   width: "100%",
-  height: "100vh",
+  height: "90vh",
 });
-
-const sideBarItem = {
-  contactName: "gideon",
-  lastMessage: "hello user",
-};
 
 type State = {
   uid: string;
@@ -82,8 +77,6 @@ export default class MessagingHome extends Component<{}, State> {
               currentChatId={currentChatId}
               setCurrentChatId={this.setCurrentChatId}
               currentUserId={uid}
-              contactName={sideBarItem.contactName}
-              lastMessage={sideBarItem.lastMessage}
             />
             <Content>
               <MessageList chatId={currentChatId} userId={uid} />

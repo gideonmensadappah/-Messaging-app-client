@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import unid from "uniqid";
 import styles from "./index.module.css";
 
-type Socket = SocketIOClient.Socket | null;
+// type Socket = SocketIOClient.Socket | null;
 type Props = {
   userId: string;
   chatId: string | null;
@@ -13,7 +13,7 @@ type Props = {
 
 const socket = io(process.env.REACT_APP_BACKEND_URL!);
 export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
-  const [state, setState] = useState("");
+  const [userInputState, setUserInputState] = useState("");
   const [typing, setTyping] = useState<string | null>(null);
   const [message, setMessage] = useState({
     id: null,
@@ -33,7 +33,7 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
         chatId,
       });
       setMessage(newMessage);
-      setState(event.target.value);
+      setUserInputState(event.target.value);
 
       socket.emit("typing", "typing...");
       if (!event.target.value) socket.emit("stop typing", "typing stopped");
@@ -48,10 +48,11 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
       if (message.text) {
         socket.emit("new message", JSON.stringify(message));
         setMessage(Object.assign({}, message, { text: null }));
-        setState("");
+        setUserInputState("");
+        if (userInputState) socket.emit("stop typing", "typing stopped");
       }
     },
-    [message]
+    [message, userInputState]
   );
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
       <span>{typing ? `user is ${typing}` : null}</span>
       <input
         type="text"
-        value={state}
+        value={userInputState}
         onChange={handleChange}
         placeholder="Write something already :)"
         className={styles.messageInput}
