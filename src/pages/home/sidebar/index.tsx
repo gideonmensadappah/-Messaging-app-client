@@ -44,15 +44,17 @@ export const SideBar: React.FC<Props> = ({
   const showList = useCallback(() => {
     setShowList(true);
   }, []);
-
+  const currentChatList = useCallback(() => {
+    getCurrentUserChats(currentUserId).then((chats) => {
+      console.log(chats);
+      setChatList(chats);
+    });
+  }, [currentUserId]);
   useEffect(() => {
-    if (currentUserId && shouldShowList) {
-      getCurrentUserChats(currentUserId).then((chats) => {
-        console.log(chats);
-        setChatList(chats);
-      });
+    if (shouldShowList) {
+      currentChatList();
     }
-  }, [currentUserId, shouldShowList]);
+  }, [currentUserId, currentChatList, shouldShowList]);
 
   return (
     <div className="container-list">
