@@ -5,7 +5,6 @@ import io from "socket.io-client";
 import unid from "uniqid";
 import styles from "./index.module.css";
 
-// type Socket = SocketIOClient.Socket | null;
 type Props = {
   userId: string;
   chatId: string | null;
