@@ -30,7 +30,6 @@ export const UsersList: React.FC<Props> = ({
           currentUserId,
           requestedUserId: _id,
         };
-        alert(`new chat with ${firstName}`);
         createNewChat(payload);
         setShowList();
       }
