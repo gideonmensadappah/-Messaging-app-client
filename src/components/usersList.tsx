@@ -21,15 +21,15 @@ export const UsersList: React.FC<Props> = ({
   setShowList,
 }) => {
   const onUserClicked = useCallback(
-    (event, _id, firstName) => {
+    (_, _id, firstName) => {
       const res = globalThis.confirm(
         `Do you want to start chat with ${firstName}`
       );
+      const payload: ChatPayload = {
+        currentUserId,
+        requestedUserId: _id,
+      };
       if (res) {
-        const payload: ChatPayload = {
-          currentUserId,
-          requestedUserId: _id,
-        };
         createNewChat(payload);
         setShowList();
       }
