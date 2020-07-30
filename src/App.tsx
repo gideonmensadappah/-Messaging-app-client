@@ -38,11 +38,12 @@ export default class App extends Component<{}, State> {
               <Route path="/update" exact component={UpdateProfile} />
             </>
           ) : (
-            <Route path="/" exact component={LogIn} />
+            <>
+              <Route path="/" exact component={LogIn} />
+              <Route path="/register" exact component={Register} />
+              {/* <Route  path="**" component={PageNotFound}/> */}
+            </>
           )}
-
-          <Route path="/register" exact component={Register} />
-          {/* <Route  path="**" component={PageNotFound}/> */}
         </Switch>
       </Router>
     );
