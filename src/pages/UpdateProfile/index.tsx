@@ -31,7 +31,7 @@ const UpdateProfile: React.FC<ChildComponentProps> = ({ history }) => {
         fd.append("phoneNumber", phoneNumber);
         fd.append("avatar", userImage);
         const res = await updateUserProfile(fd);
-        history.push("/");
+        if (res.ok) history.push("/");
       }
     },
     [userImage, phoneNumber, currentUserId, history]
