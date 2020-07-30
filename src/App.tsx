@@ -4,6 +4,7 @@ import fire from "./config/fire";
 import Home from "./pages/home";
 import LogIn from "./pages/login";
 import Register from "./pages/register";
+import UpdateProfile from "./pages/UpdateProfile";
 import "./App.css";
 
 type State = {
@@ -31,10 +32,18 @@ export default class App extends Component<{}, State> {
     return (
       <Router>
         <Switch>
-          <Route path="/" exact>
-            {this.state.user ? <Home /> : <LogIn />}
-          </Route>
-          <Route path="/register" exact component={Register} />
+          {this.state.user ? (
+            <>
+              <Route path="/" exact component={Home} />
+              <Route path="/update" exact component={UpdateProfile} />
+            </>
+          ) : (
+            <>
+              <Route path="/" exact component={LogIn} />
+              <Route path="/register" exact component={Register} />
+              {/* <Route  path="**" component={PageNotFound}/> */}
+            </>
+          )}
         </Switch>
       </Router>
     );

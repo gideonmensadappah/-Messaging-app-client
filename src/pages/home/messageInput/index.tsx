@@ -25,6 +25,8 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
 
   const handleChange = useCallback(
     (event) => {
+      socket.emit("typing", "typing...");
+
       const newMessage = Object.assign({}, message, {
         text: event.target.value,
         userId,
@@ -33,8 +35,6 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
       });
       setMessage(newMessage);
       setUserInputState(event.target.value);
-
-      socket.emit("typing", "typing...");
       if (!event.target.value) socket.emit("stop typing", "typing stopped");
     },
     [message, chatId, userId]

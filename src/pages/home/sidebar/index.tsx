@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useCallback } from "react";
+import io from "socket.io-client";
 import cc from "classnames";
+import Button from "@material-ui/core/Button";
+import SideBarItem from "./sidebarItem";
+import NewChat from "../../../components/newChat";
 import {
   getCurrentUserChats,
   ChatList,
 } from "../../../functionsHelpers/myFunctions";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import { SideBarItem } from "./sidebarItem";
-import NewChat from "../../../components/newChat";
 import "./sideBar.css";
 
 type Props = {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "25%",
   },
 }));
-
+const socket = io(process.env.REACT_APP_BACKEND_URL!);
 export const SideBar: React.FC<Props> = ({
   currentUserId,
   setCurrentChatId,
@@ -46,9 +47,16 @@ export const SideBar: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    getCurrentUserChats(currentUserId).then((chats) => {
-      setChatList(chats);
-    });
+    if (currentUserId && shouldShowList) {
+      getCurrentUserChats(currentUserId).then((chats) => {
+        setChatList(chats);
+      });
+    }
+    socket.on("new chat", () =>
+      getCurrentUserChats(currentUserId).then((chats) => {
+        setChatList(chats);
+      })
+    );
   }, [currentUserId, shouldShowList]);
 
   return (
@@ -68,6 +76,7 @@ export const SideBar: React.FC<Props> = ({
               chatList={chatList}
               userFirstName={details.firstName}
               userLastName={details.lastName}
+              avatar={details.avatar ? details.avatar : ""}
             />
           ))
         )

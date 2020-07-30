@@ -1,17 +1,19 @@
 import React, { useCallback } from "react";
+import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
-import DeleteIcon from "@material-ui/icons/Delete";
+import SettingsIcon from "@material-ui/icons/Settings";
+import { ChatList } from "../../../functionsHelpers/myFunctions";
 import { makeStyles } from "@material-ui/styles";
-import { deleteChat, ChatList } from "../../../functionsHelpers/myFunctions";
 import "./sideBarItem.css";
 
-type Props = {
+interface Props {
   chatId: string;
   setChatId: (chatId: string) => void;
   chatList: Array<ChatList>;
   userFirstName: string;
   userLastName: string;
-};
+  avatar: string;
+}
 
 const useStyle = makeStyles({
   avatar: {
@@ -22,42 +24,45 @@ const useStyle = makeStyles({
   },
 });
 
-export const SideBarItem: React.FC<Props> = ({
+const SideBarItem: React.FC<Props> = ({
   chatId,
   setChatId,
-  chatList,
   userFirstName,
   userLastName,
+  avatar,
 }) => {
   const classes = useStyle();
-
   const handleClick = useCallback(
     (_) => {
       setChatId(chatId);
     },
     [setChatId, chatId]
   );
-  const handleDelete = useCallback(
-    async (_) => {
-      const id = chatList.findIndex((chats) => chats._id === chatId);
-      chatList.splice(id, 1);
-      await deleteChat(chatId);
-    },
-    [chatId, chatList]
-  );
+
   return (
     <div className="message" onClick={handleClick}>
       <div className={classes.details}>
-        <Avatar className={classes.avatar}>H</Avatar>
+        {avatar !== "" ? (
+          <Avatar src={avatar} alt="sd" className={classes.avatar} />
+        ) : (
+          <Avatar alt="sd" className={classes.avatar}>
+            {userFirstName}
+          </Avatar>
+        )}
+
         <div className="metadata">
           <div className="user-name">{userFirstName}</div>
           <div className="time">3 minutes ago...</div>
         </div>
         <div className="menu">
-          <DeleteIcon onClick={handleDelete} />
+          <Link to="/update">
+            <SettingsIcon />
+          </Link>
         </div>
       </div>
       <div className="message-preview">{userLastName}</div>
     </div>
   );
 };
+
+export default SideBarItem;

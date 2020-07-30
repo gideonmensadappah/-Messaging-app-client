@@ -1,0 +1,15 @@
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25%;
+  flex-direction: column;
+}
+label {
+  margin-right: 4px;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+}
