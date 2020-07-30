@@ -8,7 +8,7 @@ export type Chat = {
 export type ChatList = {
   _id: string;
   usersId: Array<string>;
-  chatsdetails: Array<User>;
+  chatsdetails: Array<UserProfile>;
 };
 export type ChatPayload = {
   currentUserId: string;
@@ -19,8 +19,27 @@ export type User = {
   firstName: string;
   lastName: string;
   phone: number;
+  avatar?: any;
 };
-
+type UserProfile = {
+  uid: string | undefined;
+  firstName: string;
+  lastName: string;
+  phone: number;
+  avatar: any;
+};
+type Payload = {
+  currentUserId: string;
+  phoneNumber: string | null;
+  userImage: string | null;
+};
+export const updateUserProfile = async (payload: any) => {
+  const res = await fetch(`${REACT_APP_BACKEND_URL}/update/user`, {
+    method: "POST",
+    body: payload,
+  });
+  return res.json();
+};
 export const deleteChat = async (chatId: string) => {
   const res = await fetch(`${REACT_APP_BACKEND_URL}/chat/${chatId}`, {
     method: "DELETE",
