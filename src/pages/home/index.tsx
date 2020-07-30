@@ -10,6 +10,7 @@ import { Header } from "./header";
 import { SideBar } from "./sidebar";
 import { MessageList } from "./messageList";
 import { MessageInput } from "./messageInput";
+
 const theme = createMuiTheme({
   typography: {
     fontFamily: "'Roboto', sans-serif",
@@ -45,7 +46,7 @@ type State = {
   uid: string;
   currentChatId: string | null;
 };
-export default class MessagingHome extends Component<{}, State> {
+class MessagingHome extends Component<{}, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -67,7 +68,6 @@ export default class MessagingHome extends Component<{}, State> {
 
   render() {
     const { uid, currentChatId } = this.state;
-
     return (
       <ThemeProvider theme={theme}>
         <AppContainer>
@@ -88,3 +88,5 @@ export default class MessagingHome extends Component<{}, State> {
     );
   }
 }
+
+export default MessagingHome;
