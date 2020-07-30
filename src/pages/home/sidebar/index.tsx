@@ -52,11 +52,14 @@ export const SideBar: React.FC<Props> = ({
         setChatList(chats);
       });
     }
-    socket.on("new chat", () =>
-      getCurrentUserChats(currentUserId).then((chats) => {
-        setChatList(chats);
-      })
-    );
+    socket.on("new chat", (id: string) => {
+      if (id === currentUserId) {
+        console.log("new chat!");
+        getCurrentUserChats(currentUserId).then((chats) => {
+          setChatList(chats);
+        });
+      }
+    });
   }, [currentUserId, shouldShowList]);
 
   return (
