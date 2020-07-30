@@ -13,6 +13,8 @@ export type User = {
   lastName: string;
   phone: number;
 };
+type UserInput = string | null;
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-type UserInput = string | null;
+
 const NewChat: React.FC<Props> = ({ setShowList, currentUserId }) => {
   const classes = useStyles();
   const [suggestions, setSuggestion] = useState<Array<User>>([]);
@@ -31,16 +33,22 @@ const NewChat: React.FC<Props> = ({ setShowList, currentUserId }) => {
   const handleOnKeyUp = useCallback((event: any) => {
     event.target.value ? setUserInput(event.target.value) : setUserInput(null);
   }, []);
+  const resetSuggestionList = useCallback(() => {
+    setSuggestion([]);
+  }, [setSuggestion]);
 
   useEffect(() => {
     if (userInput) {
       getAutoCompleteUsersList(userInput).then((users) => {
-        setSuggestion(users);
+        const filterSuggestionList = users.filter(
+          (user: User) => user._id !== currentUserId
+        );
+        setSuggestion(filterSuggestionList);
       });
     } else {
       setSuggestion([]);
     }
-  }, [userInput]);
+  }, [userInput, currentUserId]);
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -59,6 +67,7 @@ const NewChat: React.FC<Props> = ({ setShowList, currentUserId }) => {
               setShowList={setShowList}
               currentUserId={currentUserId}
               suggestion={suggestion}
+              resetSuggestionList={resetSuggestionList}
             />
           ))
         : null}
