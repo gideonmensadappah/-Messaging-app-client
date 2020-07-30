@@ -31,7 +31,6 @@ const UpdateProfile: React.FC<ChildComponentProps> = ({ history }) => {
         fd.append("phoneNumber", phoneNumber);
         fd.append("avatar", userImage);
         const res = await updateUserProfile(fd);
-        console.log(res);
         if (res.ok) history.push("/");
       }
     },
@@ -71,7 +70,11 @@ const UpdateProfile: React.FC<ChildComponentProps> = ({ history }) => {
         </form>
         <div className="image-preview">
           {userImage ? (
-            <img className="image" src={String(userImage)} alt="img" />
+            <img
+              className="image"
+              src={URL.createObjectURL(userImage)}
+              alt="img"
+            />
           ) : null}
         </div>
       </div>
