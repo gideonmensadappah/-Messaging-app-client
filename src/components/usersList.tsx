@@ -38,7 +38,7 @@ export const UsersList: React.FC<Props> = ({
         createNewChat(payload);
         resetSuggestionList();
         setShowList();
-        socket.emit("new chat");
+        socket.emit("new chat", _id);
       }
     },
     [currentUserId, resetSuggestionList, setShowList]
