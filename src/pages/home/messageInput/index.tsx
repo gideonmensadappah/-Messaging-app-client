@@ -25,8 +25,7 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
 
   const handleChange = useCallback(
     (event) => {
-      socket.emit("typing", "typing...");
-
+      socket.emit("typing", chatId);
       const newMessage = Object.assign({}, message, {
         text: event.target.value,
         userId,
@@ -55,8 +54,15 @@ export const MessageInput: React.FC<Props> = ({ chatId, userId }) => {
   );
 
   useEffect(() => {
-    socket.on("user typing", (msg: string) => setTyping(msg));
+    socket.on("user typing", (currentChatId: string) => {
+      if (currentChatId === chatId) {
+        setTyping("typing...");
+      }
+    });
     socket.on("user typing stopped", (msg: string) => setTyping(null));
+    return () => {
+      socket.off("user typing");
+    };
   });
 
   return (
